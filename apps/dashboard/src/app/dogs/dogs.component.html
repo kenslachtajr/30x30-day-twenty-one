@@ -1,0 +1,18 @@
+<div class="container d-flex mt-3">
+  <div class="col-6">
+    <dogs-ngrx-dogs-list
+      [dogs]="dogs$ | async"
+      (selected)="selectDog($event)"
+      (deleted)="deleteDog($event)"
+    >
+    </dogs-ngrx-dogs-list>
+  </div>
+  <div class="col-6">
+    <dogs-ngrx-dogs-details
+      [form]="form"
+      [dog]="selectedDog$ | async"
+      (saved)="saveDog($event)"
+      (cancelled)="resetDog()"
+    ></dogs-ngrx-dogs-details>
+  </div>
+</div>

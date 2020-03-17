@@ -1,0 +1,24 @@
+<dogs-ngrx-toolbar
+  [sidenav]="sidenav"
+  [title]="title"
+  [authenticated$]="userIsAuthenticated$"
+></dogs-ngrx-toolbar>
+<mat-sidenav-container style="height: calc(100%-64px);">
+  <mat-sidenav #sidenav mode="side" closed class="app-sidenav">
+    <nav>
+      <a
+        mat-button
+        class="nav-link"
+        *ngFor="let link of links"
+        [routerLink]="link.path"
+        routerLinkActive="active"
+      >
+        <mat-icon>{{ link.icon }}</mat-icon>
+        {{ link.title }}
+      </a>
+    </nav>
+  </mat-sidenav>
+  <div class="app-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>

@@ -1,0 +1,60 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>
+        <span *ngIf="currentDog.id; else elseBlock">{{ originalTitle }}</span>
+        <ng-template #elseBlock>Select A Dog</ng-template>
+      </h1>
+    </mat-card-title>
+  </mat-card-header>
+  <form [formGroup]="form" (submit)="saved.emit(currentDog)">
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          placeholder="Name"
+          formControlName="name"
+          type="text"
+          name="name"
+        />
+        <mat-error *ngIf="form.get('name')">Required Field</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          placeholder="Temperament"
+          formControlName="temperament"
+          type="text"
+          name="temperament"
+        />
+        <mat-error *ngIf="form.get('temperament')">Required Field</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          placeholder="Life Span"
+          formControlName="life_span"
+          type="text"
+          name="life_span"
+        />
+        <mat-error *ngIf="form.get('life_span')">Required Field</mat-error>
+      </mat-form-field>
+
+      <mat-card-actions>
+        <button
+          type="submit"
+          [disabled]="form.invalid"
+          mat-button
+          color="primary"
+        >
+          {{ currentDog.id ? 'Save' : 'Create' }}
+        </button>
+        <button type="button" mat-button (click)="cancelled.emit(currentDog)">
+          Cancel
+        </button>
+      </mat-card-actions>
+    </mat-card-content>
+  </form>
+</mat-card>
