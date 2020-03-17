@@ -70,9 +70,8 @@ export class DogsComponent implements OnInit {
     this.form = this.formbuilder.group({
       id: null,
       name: ['', Validators.compose([Validators.required])],
-      details: ['', Validators.compose([Validators.required])],
-      tasteLevel: '',
-      approved: null
+      temperament: ['', Validators.compose([Validators.required])],
+      life_span: '',
     });
   }
 }

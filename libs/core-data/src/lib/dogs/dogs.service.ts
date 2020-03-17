@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+ import { Injectable } from '@angular/core';
 import { Dog } from './dog.model';
 import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
+
+import * as uuid from 'uuid/v1';
 
 const BASE_URL = 'https://api.thedogapi.com/v1';
 
@@ -35,12 +38,12 @@ export class DogsService {
   }
 
   create(dog: Dog) {
-    return this.httpClient.post(this.getUrl(), dog);
+    return of(({ id: uuid(), ...dog}));
   }
 
   delete(dog: Dog) {
     return this.httpClient.delete(this.getUrlForId(dog.id));
-  }
+  } 
 
   update(dog: Dog) {
     return this.httpClient.put(this.getUrlForId(dog.id), dog);

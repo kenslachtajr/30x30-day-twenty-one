@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 import * as dogsActions from './dogs.actions';
 import { DogsFacade } from './dogs.facade';
@@ -80,9 +81,10 @@ export class DogsEffects {
         action: ReturnType<typeof dogsActions.updateDog>,
         state: DogsPartialState
       ) => {
-        return this.dogsService
-          .update(action.dog)
-          .pipe(map((dog: Dog) => dogsActions.dogUpdated({ dog })));
+        return of(action.dog).pipe(
+          map((dog: Dog) => dogsActions.dogUpdated({ dog })),
+          tap(() => this.notify.notification('Successfully updated a dog'))
+        );
       },
       onError: (
         action: ReturnType<typeof dogsActions.updateDog>,
@@ -99,9 +101,10 @@ export class DogsEffects {
         action: ReturnType<typeof dogsActions.deleteDog>,
         state: DogsPartialState
       ) => {
-        return this.dogsService
-          .delete(action.dog)
-          .pipe(map(() => dogsActions.dogDeleted({ dog: action.dog })));
+        return of(action.dog).pipe(
+          map((dog: Dog) => dogsActions.dogDeleted({ dog })),
+          tap(() => this.notify.notification('Successfully deleted a dog'))
+        );
       },
       onError: (
         action: ReturnType<typeof dogsActions.deleteDog>,
